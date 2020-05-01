@@ -1,5 +1,5 @@
 defmodule CrossTest do
-  use ExUnit.Case, async: false #Выполняет наборы тестов параллельно
+  use ExUnit.Case, async: false
   use Plug.Test
 
   test "Добавить запись в хранилищи" do
@@ -45,24 +45,24 @@ defmodule CrossTest do
   end
 
   test "Post" do
-    resp = conn(:post, "/", %{key: 7, value: "seven", ttl: 9000})
+    resp = conn(:post, "/", %{key: 7, value: "seven", ttl: 5000})
     |> Cross.Router.call([])
     assert resp.status == 200
     assert resp.resp_body == "\"Запись seven добавлена\""
   end
 
   test "GET" do
-    resp = conn(:get, "/", %{key: 7})
+    resp = conn(:get, "/", %{key: 1})
     |> Cross.Router.call([])
     assert resp.status == 200
-    assert resp.resp_body == "\"seven\""
+    assert resp.resp_body == "\"one\""
   end
 
   test "PUT" do
-    resp = conn(:put, "/", %{key: 7, value: "eight"})
+    resp = conn(:put, "/", %{key: 3, value: "three"})
     |> Cross.Router.call([])
     assert resp.status == 200
-    assert resp.resp_body == "\"Изменение значение на eight\""
+    assert resp.resp_body == "\"Изменение значение на three\""
   end
 
   test "DELETE" do
