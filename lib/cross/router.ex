@@ -13,7 +13,6 @@ defmodule Cross.Router do
   post "/" do
     conn
     |> Plug.Conn.fetch_query_params
-    #{ttl, _} = Integer.parse(conn.params["ttl"])
     Plug.Conn.assign(conn, :response, Storage.create(conn.params["key"], conn.params["value"], conn.params["ttl"]))
     |> result
   end
